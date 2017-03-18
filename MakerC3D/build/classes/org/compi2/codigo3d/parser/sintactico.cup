@@ -126,15 +126,47 @@ expresion   ::= expresion:izq MAS expresion:der
 
             |   expresion:izq AND expresion:der
                     {: 
-                        String temp = ControlC3D.generaTemp();
-                        String c3d = temp + " = " + izq.getCad() + " && " + der.getCad() + ";\n";
+                        String LActual = ControlC3D.getL() ;
+                        String temp = ControlC3D.generaEstado();
+                        String temp2 = ControlC3D.generaEstado();
+                        
+
+                        String c3d = "";
+                        if(izq.getCad().charAt(0) !='L'){
+                            String temp3 = ControlC3D.generaEstado();    
+                            String temp4 = ControlC3D.generaEstado();
+                            c3d = " if " + izq.getCad() + " go to "+ temp+";\n\t go to " + temp2+";\n"; 
+                            c3d += temp +": if " + der.getCad() + " go to "+ temp3+";\n\t go to " + temp4+";\n";
+                            c3d+=temp2+ "," + temp4 +":{FALSE};\n";   
+                        }else{
+
+                            c3d += LActual +": if " + der.getCad() + " go to "+ temp+";\n\t go to " + temp2+";\n";
+                            c3d+= temp2 +":{FALSE};\n";   
+                        }
+                        
                         ControlC3D.agregarC3D(c3d);
                         RESULT = new NodoC3D(temp); 
                     :}
             |   expresion:izq OR expresion:der
                     {: 
-                        String temp = ControlC3D.generaTemp();
-                        String c3d = temp + " = " + izq.getCad() + " || " + der.getCad() + ";\n";
+                        String LActual = ControlC3D.getL2() ;
+                        String temp = ControlC3D.generaEstado();
+                        String temp2 = ControlC3D.generaEstado();
+                        
+
+                        String c3d = "";
+                        if(izq.getCad().charAt(0) !='L'){
+                            String temp3 = ControlC3D.generaEstado();    
+                            String temp4 = ControlC3D.generaEstado();
+                            c3d = " if " + izq.getCad() + " go to "+ temp+";\n\t go to " + temp2+";\n"; 
+                            c3d += temp2 +": if " + der.getCad() + " go to "+ temp3+";\n\t go to " + temp4+";\n";
+                            c3d+=temp+ "," + temp3 +":{TRUE};\n";   
+                        }else{
+
+                            c3d += LActual +": if " + der.getCad() + " go to "+ temp+";\n\tgo to " + temp2+";\n";
+                            c3d+= temp +":{TRUE};\n";   
+                        }
+                        
                         ControlC3D.agregarC3D(c3d);
                         RESULT = new NodoC3D(temp); 
                     :}

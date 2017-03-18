@@ -7,6 +7,7 @@ package org.compi2.codigo3d.parser;
 public class ControlC3D {
     
     private static int temp = 0;
+    private static int l = 1;
     private static String c3d = "";
     
     /**
@@ -15,6 +16,7 @@ public class ControlC3D {
      */
     public static void reiniciar(){
         temp = 0;
+        l=1;
         c3d = "";
     }
     
@@ -25,6 +27,11 @@ public class ControlC3D {
     public static String generaTemp(){
         return "t$"+temp++;
     }
+    
+    public static String generaEstado(){
+        return "L"+l++ ;
+    }
+    
     
     /**
      * Agrega la sentencia que recibe como parámetro a la cadena de código
@@ -42,5 +49,10 @@ public class ControlC3D {
     public static String getC3D(){
         return c3d;
     }
-    
+    public static String getL(){
+        return "L"+(l-2);
+    }
+    public static String getL2(){
+        return "L"+(l-1);
+    }
 }
